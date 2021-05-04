@@ -41,6 +41,25 @@ export default class App extends Component {
           <Text style={styles.resultText}>121</Text>
         </View>
         <View style={styles.buttons}>
+        <View style={styles.operations}>
+            <View style={styles.column}>
+                <TouchableOpacity style={styles.btn}>
+                  <Text style={styles.btnText}>Del</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.btn}>
+                  <Text style={styles.btnText}>/</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.btn}>
+                  <Text style={styles.btnText}>*</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.btn}>
+                  <Text style={styles.btnText}>-</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.btn}>
+                  <Text style={styles.opernText}>+</Text>
+                </TouchableOpacity>
+            </View>
+          </View>
           <View style={styles.numbers}>
             <View style={styles.row}>
               <TouchableOpacity onPress={()=>this.onButtonPressed('7')} style={styles.btn}>
@@ -87,15 +106,6 @@ export default class App extends Component {
               </TouchableOpacity>
             </View>
           </View>
-          <View style={styles.operations}>
-            <View style={styles.column}>
-                <Button title="Del"></Button>
-                <Button title="/"></Button>
-                <Button title="*"></Button>
-                <Button title="-"></Button>
-                <Button title="+"></Button>
-            </View>
-          </View>
         </View>
       </View>
     );
@@ -111,12 +121,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center'
-  },
-  column: {
-    flex: 1,
-    justifyContent: 'space-around',
-    alignItems: 'stretch',
-    backgroundColor: 'black'
   },
   result: {
     flex: 1,
@@ -156,7 +160,12 @@ const styles = StyleSheet.create({
     backgroundColor: 'gray'
   },
   operations: {
+    flex: 1
+  },
+  column: {
     flex: 1,
-    backgroundColor: 'black'
+    justifyContent: 'space-around',
+    alignItems: 'stretch',
+    backgroundColor: 'white'
   }
 })
