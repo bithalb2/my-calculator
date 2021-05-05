@@ -5,7 +5,8 @@ export default class App extends Component {
   constructor() {
     super()
     this.state = {
-      resultText: ""
+      resultText: "",
+      calculationText: ""
     }
   }
 
@@ -19,11 +20,26 @@ export default class App extends Component {
 
   calculateResult() {
     const text = this.state.resultText
+    this.setState({
+      calculationText: eval(text)
+    })
+  }
+
+  validate() {
+    const text = this.state.resultText
+    switch(text.slice(-1)) {
+      case '+':
+      case '-':
+      case '*':
+      case '/':
+        return false
+    }
+    return true
   }
   onButtonPressed(text) {
     console.log(text);
     if(text === '=') {
-      calculateResult(this.state.resultText)
+      return this.validate() && this.calculateResult(this.state.resultText)
     }
 
     this.setState({
@@ -31,31 +47,56 @@ export default class App extends Component {
     })
   }
 
+  onOperator(text) {
+    switch(text) {
+      case 'Del':
+        let tempText = this.state.resultText.split('')
+        tempText.pop()
+        this.setState({
+          resultText: tempText.join('')
+        })
+        break
+      case '+':
+      case '-':
+      case '/':
+      case '*':
+        const lastChar = this.state.resultText.split('').pop()
+
+        if(lastChar === '+' || lastChar === '-' || lastChar === '*' || lastChar === '/') return
+
+        if(this.state.text === '') return
+        this.setState({
+          resultText: this.state.resultText + text
+        })
+
+    }
+  }
+
   render() {
     return (
       <View style={styles.container}>
         <View style={styles.calculation}>
-          <Text style={styles.calculationText}>{this.state.resultText}</Text>
+          <Text style={styles.calculationText}>{this.state.calculationText}</Text>
         </View>
         <View style={styles.result}>
-          <Text style={styles.resultText}>121</Text>
+          <Text style={styles.resultText}>{this.state.resultText}</Text>
         </View>
         <View style={styles.buttons}>
         <View style={styles.operations}>
             <View style={styles.column}>
-                <TouchableOpacity style={styles.btn}>
+                <TouchableOpacity style={styles.btn} onPress={()=>this.onOperator('Del')}>
                   <Text style={styles.btnText}>Del</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.btn}>
+                <TouchableOpacity style={styles.btn} onPress={()=>this.onOperator('/')}>
                   <Text style={styles.btnText}>/</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.btn}>
+                <TouchableOpacity style={styles.btn} onPress={()=>this.onOperator('*')}>
                   <Text style={styles.btnText}>*</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.btn}>
+                <TouchableOpacity style={styles.btn} onPress={()=>this.onOperator('-')}>
                   <Text style={styles.btnText}>-</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.btn}>
+                <TouchableOpacity style={styles.btn} onPress={()=>this.onOperator('+')}>
                   <Text style={styles.opernText}>+</Text>
                 </TouchableOpacity>
             </View>
